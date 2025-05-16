@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'core/resources/route_manager.dart';
 
@@ -11,14 +12,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: RoutesManager.onGenerateRoute,
-       initialRoute: RoutesName.onBoardingScreen,
-      // routes: RoutesManager.routes,
-     
-      
-      
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          onGenerateRoute: RoutesManager.onGenerateRoute,
+          initialRoute: RoutesName.onBoardingScreen,
+          // routes: RoutesManager.routes,
+          theme: ThemeData.light()
+              .copyWith(scaffoldBackgroundColor: Colors.white)),
     );
   }
 }

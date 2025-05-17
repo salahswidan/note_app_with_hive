@@ -19,12 +19,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     super.initState();
     _controller = OnBoardingController();
   }
+
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
         bottomNavigationBar: CustomBottomNavBarOnBoardingScreen(
           onPressed: () {
-           _controller.goToHomeScreen(context);
+            _controller.goToHomeScreen(context);
           },
         ),
         body: Container(
@@ -32,42 +33,44 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             horizontal: 30.w,
           ),
           width: double.infinity,
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 125.h,
-                ),
-                Image.asset(
-                  "assets/images/on_boarding_png.png",
-                  width: 280.w,
-                ),
-                SizedBox(
-                  height: 55.h,
-                ),
-                Text(
-                  "All thoughts one place.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 48.sp,
-                    fontFamily: "Otama",
-                    fontWeight: FontWeight.w700,
+          child: SingleChildScrollView(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 125.h,
                   ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  "Drive right in and clear that mind of yours by writing down",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontFamily: "Otama",
-                    color: ColorManager.KGreyColor,
+                  Image.asset(
+                    "assets/images/on_boarding_png.png",
+                    width: 280.w,
                   ),
-                ),
-              ]),
+                  SizedBox(
+                    height: 55.h,
+                  ),
+                  Text(
+                    "All thoughts one place.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 48.sp,
+                      fontFamily: "Otama",
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    "Drive right in and clear that mind of yours by writing down",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontFamily: "Otama",
+                      color: ColorManager.KGreyColor,
+                    ),
+                  ),
+                ]),
+          ),
         ));
   }
 }

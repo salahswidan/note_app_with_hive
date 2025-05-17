@@ -1,8 +1,6 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../core/resources/color_manager.dart';
 
 class CustomAppBarNewNoteScreen extends StatelessWidget {

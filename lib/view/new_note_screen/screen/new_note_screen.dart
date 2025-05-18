@@ -20,11 +20,12 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
     super.initState();
     _controller = NewNoteController(context);
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
     _controller.disposeController();
-    _controller.titleController.dispose();
+    // _controller.titleController.dispose();
     super.dispose();
   }
 

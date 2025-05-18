@@ -57,11 +57,21 @@ class HiveHelper<T> {
   }
 
   // read value
-  Future<T?> readValue({required String key}) async {
+  Future<T?> getValue({required String key}) async {
     Box<T> box = await openBox();
     T? data;
     try {   
       data =  await box.get(key);     
+    } finally {
+      await closeBox(box);
+    }
+    return data;
+  }
+  Future<Map<dynamic,T?>> getAllData() async {
+    Box<T> box = await openBox();
+    Map<dynamic,T>? data;
+    try {   
+      data =  await box.toMap();     
     } finally {
       await closeBox(box);
     }

@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _controller = HomeController(context);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +41,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        body: CustomEmptyBodyHomeScreen());
+        body: RefreshIndicator(
+            onRefresh: () async {
+              _controller.getAllNotes();
+            },
+            child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: CustomEmptyBodyHomeScreen())));
   }
 }

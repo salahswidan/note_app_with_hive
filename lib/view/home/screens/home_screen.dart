@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:note_app/controller/home_screen/home_controller.dart';
 import 'package:note_app/core/resources/color_manager.dart';
 
+import '../../new_note_screen/widgets/custom_grid_view_note_body.dart';
 import '../widgets/custom_empty_body_home_screen.dart';
 import '../widgets/custom_floating_action_button_home.dart';
 
@@ -41,12 +42,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        body: RefreshIndicator(
-            onRefresh: () async {
-              _controller.getAllNotes();
-            },
-            child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: CustomEmptyBodyHomeScreen())));
+        body: true
+            ? CustomGridViewNoteBody()
+            : RefreshIndicator(
+                onRefresh: () async {
+                  _controller.getAllNotes();
+                },
+                child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: CustomEmptyBodyHomeScreen())));
   }
 }

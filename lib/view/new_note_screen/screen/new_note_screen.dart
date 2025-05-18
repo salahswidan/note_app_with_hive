@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:note_app/controller/new_note_screen/new_note_controller.dart';
-import 'package:note_app/core/resources/color_manager.dart';
-
 import '../widgets/custom_app_bar_new_note_screen.dart';
+import '../widgets/custom_text_field_desc_note.dart';
+import '../widgets/custom_text_field_title_note.dart';
 
 class NewNoteScreen extends StatefulWidget {
   const NewNoteScreen({super.key});
@@ -22,6 +20,13 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
     super.initState();
     _controller = NewNoteController(context);
   }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _controller.disposeController();
+    _controller.titleController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,51 +40,24 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                 onPressedBack: () {
                   _controller.goBack();
                 },
-                onPressedAtMark: () {},
+                onPressedAtMark: () {
+                  _controller.onTapAtMarkIcon();
+                },
               ),
-              Form(
-                  child: Expanded(
+              Expanded(
                 child: Column(
                   children: [
-                    TextFormField(
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 48.sp,
-                        fontFamily: "Otama",
-                      ),
-                      maxLines: 1,
-                      decoration: InputDecoration(
-                        hintText: "Title",
-                        hintStyle: TextStyle(
-                          color: ColorManager.KGrey2Color,
-                          fontSize: 48.sp,
-                          fontFamily: "Otama",
-                        ),
-                        border: InputBorder.none,
-                      ),
+                    CustomTextFieldTitle(
+                      titleController: _controller.titleController,
                     ),
                     Expanded(
-                      child: TextFormField(
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 23.sp,
-                          fontFamily: "Otama",
-                        ),
-                        maxLength: null,
-                        decoration: InputDecoration(
-                          hintText: "Type Something....",
-                          hintStyle: TextStyle(
-                            color: ColorManager.KGrey2Color,
-                            fontSize: 23.sp,
-                            fontFamily: "Otama",
-                          ),
-                          border: InputBorder.none,
-                        ),
+                      child: CustomTextFieldDescNote(
+                        descController: _controller.descController,
                       ),
                     ),
                   ],
                 ),
-              )),
+              ),
             ],
           ),
         ),

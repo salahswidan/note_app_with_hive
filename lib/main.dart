@@ -3,10 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import 'core/resources/route_manager.dart';
+import 'model/note_model/note_model.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+   Hive.registerAdapter(NoteModelAdapter());
   
   runApp(const MyApp());
 }

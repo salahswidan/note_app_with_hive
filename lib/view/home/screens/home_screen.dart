@@ -44,12 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
             onRefresh: () async {
               _controller.getAllNotes();
             },
-            child: true
-                ? CustomGridViewNoteBody(
-                    outputlistNoteModel: _controller.outputNotes,
-                  )
-                : SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: CustomEmptyBodyHomeScreen())));
+            child: CustomGridViewNoteBody(
+              onTapAtNote: _controller.onTapAtItemNote,
+              outputlistNoteModel: _controller.outputNotes,
+            )));
   }
 }

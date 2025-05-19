@@ -142,7 +142,7 @@ class NewNoteController {
       //?now will show alert bottom sheet
       showAlertBottomSheet();
     } else {
-      log("object");
+    
       addNewNoteToHive();
       //?add data to hive
       //?close

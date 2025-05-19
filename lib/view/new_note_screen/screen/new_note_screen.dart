@@ -31,6 +31,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _controller.getArgument();
     return Scaffold(
       body: SafeArea(
         child: Padding(

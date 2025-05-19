@@ -22,21 +22,22 @@ class RoutesManager {
       case RoutesName.onBoardingScreen:
         body = OnBoardingScreen();
         break;
-          case RoutesName.homeScreen:
-            body = HomeScreen();
-            break;
-          case RoutesName.newNoteScreen:
-            body = NewNoteScreen();
-            break;
-          default:
-            body = NotFoundRouteScreen();
-            break;
-        }
-        return MaterialPageRoute(
-          builder: (context) => body,
-        );
+      case RoutesName.homeScreen:
+        body = HomeScreen();
+        break;
+      case RoutesName.newNoteScreen:
+        body = NewNoteScreen();
+        break;
+      default:
+        body = NotFoundRouteScreen();
+        break;
     }
-  
+    return MaterialPageRoute(
+      builder: (context) => body,
+      settings: settings,
+    );
+  }
+
 // static Map<String, WidgetBuilder> routes = {
 //   RoutesName.onBoardingScreen: (context) => OnBoardingScreen(),
 // };

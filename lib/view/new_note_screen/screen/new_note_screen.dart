@@ -39,6 +39,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
           child: Column(
             children: [
               CustomAppBarNewNoteScreen(
+                editNow: _controller.noteModel == null ? false : true,
                 onPressedBack: () {
                   _controller.goBack();
                 },
@@ -46,20 +47,24 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                   _controller.onTapAtMarkIcon();
                 },
               ),
-              Expanded(
-                child: Column(
-                  children: [
-                    CustomTextFieldTitle(
-                      titleController: _controller.titleController,
-                    ),
-                    Expanded(
-                      child: CustomTextFieldDescNote(
-                        descController: _controller.descController,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              StreamBuilder<bool?>(
+                  stream: _controller.outPutEditStatus,
+                  builder: (context, snapshot) => Expanded(
+                        child: Column(
+                          children: [
+                            CustomTextFieldTitle(
+                              active: snapshot.data,
+                              titleController: _controller.titleController,
+                            ),
+                            Expanded(
+                              child: CustomTextFieldDescNote(
+                                active: snapshot.data,
+                                descController: _controller.descController,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
             ],
           ),
         ),

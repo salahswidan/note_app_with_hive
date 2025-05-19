@@ -5,10 +5,13 @@ import '../../../core/resources/color_manager.dart';
 
 class CustomAppBarNewNoteScreen extends StatelessWidget {
   const CustomAppBarNewNoteScreen({
-    super.key, required this.onPressedBack, required this.onPressedAtMark,
+    super.key,
+    required this.onPressedBack,
+    required this.onPressedAtMark, required this.editNow,
   });
   final VoidCallback onPressedBack;
   final VoidCallback onPressedAtMark;
+  final bool editNow;
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +41,7 @@ class CustomAppBarNewNoteScreen extends StatelessWidget {
         ),
         ElevatedButton(
             style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 7.w, vertical: 6.h),
+              padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 6.h),
               fixedSize: const Size(33, 33),
               backgroundColor: ColorManager.KPrimaryColor,
               shape: const RoundedRectangleBorder(
@@ -51,7 +53,7 @@ class CustomAppBarNewNoteScreen extends StatelessWidget {
             onPressed: onPressedAtMark,
             child: Center(
               child: Icon(
-                CupertinoIcons.check_mark_circled,
+               editNow ? Icons.edit : CupertinoIcons.check_mark_circled,
                 color: Colors.white,
                 size: 20.sp,
               ),

@@ -1,19 +1,29 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:note_app/core/database/hive/hive_helper.dart';
 import 'package:note_app/model/note_model/note_model.dart';
+import 'package:note_app/view/new_note_screen/widgets/bottom_sheet/custom_alert_edit_or_delete_note.dart';
 import '../../core/resources/consts_values.dart';
 import '../../view/new_note_screen/widgets/bottom_sheet/custom_body_model_bottom_sheet_new_note.dart';
 
 class NewNoteController {
   BuildContext context;
   NoteModel? noteModel;
-
+  bool? editStatus;
+  //? edit = null => add new note
+  //? edit = true => edit note
+  //? edit = false => you should change value to true to can edit
   NewNoteController(this.context) {
     start();
   }
 
   late TextEditingController titleController;
   late TextEditingController descController;
+
+  late StreamController<bool?> _controllerEditStatus;
+  late Sink<bool?> _inputEditStatus;
+  late Stream<bool?> outPutEditStatus;
 
   Future<void> start() async {
     await initController();
@@ -26,11 +36,16 @@ class NewNoteController {
   Future<void> initController() async {
     titleController = TextEditingController();
     descController = TextEditingController();
+    _controllerEditStatus = StreamController();
+    _inputEditStatus = _controllerEditStatus.sink;
+    outPutEditStatus = _controllerEditStatus.stream;
   }
 
   Future<void> disposeController() async {
     titleController.dispose();
     descController.dispose();
+    _controllerEditStatus.close();
+    _inputEditStatus.close();
   }
 
   void goBack() {
@@ -38,7 +53,15 @@ class NewNoteController {
   }
 
   void onTapAtMarkIcon() {
-    addNewNote();
+    if (noteModel == null) {
+      //?add new note
+      addNewNote();
+    } else {
+      //?edit note
+      // editStatus = true;
+      // _inputEditStatus.add(editStatus);
+      showAlertEditOrDeleteBottomSheet();
+    }
   }
 
   void addNewNote() {
@@ -98,9 +121,37 @@ class NewNoteController {
     );
   }
 
+  void showAlertEditOrDeleteBottomSheet() {
+    FocusScope.of(context).unfocus();
+    showModalBottomSheet(
+      // isDismissible: false,
+      backgroundColor: Colors.transparent,
+
+      context: context,
+      builder: (context) => CustomAlertEditOrDeleteNote(
+        onTapAtDeleteButton: onTapAtEditStatusDeleteButton,
+        onTapAtEditBotton: onTapAtEditStatusEditButton,
+        onPressedClose: onPressedClosed,
+      ),
+    );
+  }
+
   void onTapAtDeleteButton() {
     Navigator.of(context).pop();
     Navigator.of(context).pop();
+  }
+
+  Future<void> onTapAtEditStatusDeleteButton() async {
+    HiveHelper<NoteModel> hiveHelper = HiveHelper(ConstsValue.kNoteBox);
+    await hiveHelper.deleteValue(key: noteModel!.id.toString());
+    Navigator.of(context).pop();
+    Navigator.of(context).pop();
+  }
+
+  void onTapAtEditStatusEditButton() {
+    Navigator.of(context).pop();
+    editStatus = true;
+    _inputEditStatus.add(editStatus);
   }
 
   void onTapAtOkButton() {
@@ -121,5 +172,8 @@ class NewNoteController {
   void fillDataNote() {
     descController.text = noteModel!.desc;
     titleController.text = noteModel!.title;
+    //? change edit status
+    editStatus = false;
+    _inputEditStatus.add(editStatus);
   }
 }

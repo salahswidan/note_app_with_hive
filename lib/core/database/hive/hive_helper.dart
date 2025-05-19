@@ -67,9 +67,9 @@ class HiveHelper<T> {
     }
     return data;
   }
-  Future<Map<dynamic,T?>> getAllData() async {
+  Future<Map<dynamic,T>> getAllData() async {
     Box<T> box = await openBox();
-    Map<dynamic,T>? data;
+    Map<dynamic,T> data;
     try {   
       data =  await box.toMap();     
     } finally {

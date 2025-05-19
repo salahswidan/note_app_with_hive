@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:note_app/core/resources/consts_values.dart';
 
@@ -7,14 +9,39 @@ import '../../model/note_model/note_model.dart';
 
 class HomeController {
   BuildContext context;
-  HomeController(this.context);
+  HomeController(this.context) {
+    start();
+  }
+  Future<void> start() async {
+    await initController();
+    await getAllNotes();
+  }
 
-  void navigateToNewNoteScreen() {
-    Navigator.of(context).pushNamed(RoutesName.newNoteScreen);
+  late StreamController<List<NoteModel>> _controllerNotes;
+  late Sink<List<NoteModel>> _inputNotes;
+  late Stream<List<NoteModel>> outputNotes;
+
+  Future<void> initController() async {
+    _controllerNotes = StreamController();
+    _inputNotes = _controllerNotes.sink;
+    outputNotes = _controllerNotes.stream;
+  }
+
+  Future<void> dispose() async {
+    _controllerNotes.close();
+    _inputNotes.close();
+  }
+
+  void goToNewNoteScreen() {
+    Navigator.of(context).pushNamed(RoutesName.newNoteScreen).then((value) {
+      getAllNotes();
+    });
   }
 
   Future<void> getAllNotes() async {
     HiveHelper<NoteModel> hiveHelper = HiveHelper(ConstsValue.kNoteBox);
-    print(await hiveHelper.getAllData());
+    Map<dynamic, NoteModel> data = await hiveHelper.getAllData();
+
+    _inputNotes.add(data.values.toList());
   }
 }

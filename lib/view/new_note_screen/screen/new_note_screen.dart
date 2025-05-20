@@ -36,20 +36,21 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(right: 25.0, left: 25.0, top: 14),
-          child: Column(
-            children: [
-              CustomAppBarNewNoteScreen(
-                editNow: _controller.noteModel == null ? false : true,
-                onPressedBack: () {
-                  _controller.goBack();
-                },
-                onPressedAtMark: () {
-                  _controller.onTapAtMarkIcon();
-                },
-              ),
-              StreamBuilder<bool?>(
+          child:  StreamBuilder<bool?>(
                   stream: _controller.outPutEditStatus,
-                  builder: (context, snapshot) => Expanded(
+            builder: (context, snapshot) {
+              return Column(
+                children: [
+                  CustomAppBarNewNoteScreen(
+                    editNow: snapshot.data,
+                    onPressedBack: () {
+                      _controller.goBack();
+                    },
+                    onPressedAtMark: () {
+                      _controller.onTapAtMarkIcon();
+                    },
+                  ),
+                  Expanded(
                         child: Column(
                           children: [
                             CustomTextFieldTitle(
@@ -64,8 +65,10 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                             ),
                           ],
                         ),
-                      )),
-            ],
+                      ),
+                ],
+              );
+            }
           ),
         ),
       ),

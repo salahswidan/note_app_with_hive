@@ -7,11 +7,12 @@ class CustomAppBarNewNoteScreen extends StatelessWidget {
   const CustomAppBarNewNoteScreen({
     super.key,
     required this.onPressedBack,
-    required this.onPressedAtMark, required this.editNow,
+    required this.onPressedAtMark,
+    required this.editNow,
   });
   final VoidCallback onPressedBack;
   final VoidCallback onPressedAtMark;
-  final bool editNow;
+  final bool? editNow;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +54,11 @@ class CustomAppBarNewNoteScreen extends StatelessWidget {
             onPressed: onPressedAtMark,
             child: Center(
               child: Icon(
-               editNow ? Icons.edit : CupertinoIcons.check_mark_circled,
+                editNow == null
+                    ? CupertinoIcons.check_mark_circled
+                    : editNow == false
+                        ? Icons.edit
+                        : CupertinoIcons.check_mark_circled,
                 color: Colors.white,
                 size: 20.sp,
               ),
